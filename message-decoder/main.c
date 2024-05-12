@@ -2,20 +2,27 @@
 #include <fcntl.h>
 
 #define SIZE 4096
+#define BIG_START_POINT 'A'
+#define BIG_END_POINT 'Z'
+#define SMALL_START_POINT 'a'
+#define SMALL_END_POINT 'z'
+#define BIG_C_SYMBOL 'C'
+#define SMALL_C_SYMBOL 'c'
+#define SHIFT_COUNT 3
 
 char decode(char sym)
 {
-    if (sym >= 'A' && sym <= 'Z'){
-        if (sym <= 'C' && sym >= 'A')
-            sym = 'Z' - (2 - (sym - 'A'));
+    if (sym >= BIG_START_POINT && sym <= BIG_END_POINT){
+        if (sym <= BIG_C_SYMBOL && sym >= BIG_START_POINT)
+            sym = BIG_END_POINT - (SHIFT_COUNT - 1 - (sym - BIG_START_POINT));
         else 
-            sym -= 3;
-    } else if (sym >= 'a' && sym <= 'z'){
-        if (sym <= 'c' && sym >= 'a'){
-            sym = 'z' - (2 - (sym - 'a'));
+            sym -= SHIFT_COUNT;
+    } else if (sym >= SMALL_START_POINT && sym <= SMALL_END_POINT){
+        if (sym <= SMALL_C_SYMBOL && sym >= SMALL_START_POINT){
+            sym = SMALL_END_POINT - (SHIFT_COUNT - 1 - (sym - SMALL_START_POINT));
         }
         else {
-            sym -= 3;
+            sym -= SHIFT_COUNT;
         }
     }
     return sym;
