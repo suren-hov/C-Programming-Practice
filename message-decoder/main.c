@@ -13,17 +13,13 @@
 char decode(char sym)
 {
     if (sym >= BIG_START_POINT && sym <= BIG_END_POINT){
-        if (sym <= BIG_C_SYMBOL && sym >= BIG_START_POINT)
-            sym = BIG_END_POINT - (SHIFT_COUNT - 1 - (sym - BIG_START_POINT));
-        else 
-            sym -= SHIFT_COUNT;
+        sym = sym <= BIG_C_SYMBOL && sym >= BIG_START_POINT ?
+            BIG_END_POINT - (SHIFT_COUNT - 1 - (sym - BIG_START_POINT)) : 
+            sym - SHIFT_COUNT;
     } else if (sym >= SMALL_START_POINT && sym <= SMALL_END_POINT){
-        if (sym <= SMALL_C_SYMBOL && sym >= SMALL_START_POINT){
-            sym = SMALL_END_POINT - (SHIFT_COUNT - 1 - (sym - SMALL_START_POINT));
-        }
-        else {
-            sym -= SHIFT_COUNT;
-        }
+        sym = sym <= SMALL_C_SYMBOL && sym >= SMALL_START_POINT ?
+            SMALL_END_POINT - (SHIFT_COUNT - 1 - (sym - SMALL_START_POINT)) :
+            sym - SHIFT_COUNT;
     }
     return sym;
 }
@@ -40,5 +36,8 @@ int main()
     }
 
     write(new_fd, buf, size);
+    close(fd);
+    close(new_fd);
+
     return 0;
 }
