@@ -35,4 +35,6 @@ int main()
     if (!status) perror("pthread_join");
 
     printf("glob = %ld\n", glob);
+    pthread_mutex_destroy(&mtx);
+
 }
