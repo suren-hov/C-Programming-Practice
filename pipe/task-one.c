@@ -31,7 +31,7 @@ int main()
             perror("Invalid read");
         }
         printf("Message from parent: %s", buffer);
-        close(pipfd[0]);
+        close(pipfd[1]);
     } else {
         int WBytes = write(pipfd[1], message, strlen(message));
         if (WBytes < 0) {
