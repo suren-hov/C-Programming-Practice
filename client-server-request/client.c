@@ -8,7 +8,7 @@
 #include <arpa/inet.h> 
 #include <unistd.h>
 
-#define PORT_NUMBER 8082
+#define PORT_NUMBER 4444
 #define BUFFER_SIZE 1024
 #define IP_ADDRESS "127.0.0.1"
 #define SA struct sockaddr
@@ -65,6 +65,7 @@ int main()
 	printf("File size is : %d\n", fileParam.fileSize);
 	printf("Number of characters is : %d\n", fileParam.NumberOfCharacters);
 	printf("Number of lines is : %d\n", fileParam.NumberOfLines);
+	printf("Number of words is : %d\n", fileParam.NumberOfWords);
 
     close(sockfd);
 }

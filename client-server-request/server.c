@@ -5,8 +5,9 @@
 #include <sys/socket.h>
 #include <netdb.h>
 #include <unistd.h>
+#include <ctype.h>
 
-#define PORT_NUMBER 8082
+#define PORT_NUMBER 8081
 #define BUFFER_SIZE 1024
 #define SA struct sockaddr 
 
@@ -15,9 +16,7 @@ struct fileParams {
   int NumberOfCharacters;
   int NumberOfLines;
   int NumberOfWords;
-};
-
-struct fileParams fileParam;
+} fileParam;
 
 void throwError(const char* msg)
 {
@@ -36,13 +35,17 @@ void reciveFileName(int connfd)
   read(connfd, buff, sizeof(buff)); 
 
   // print buffer which contains the client contents 
-  printf("Filne name is: %s\n", buff);
+  printf("File name is: %s\n", buff);
 
+  FILE *file = fopen(buff, "r");
+  if (file == NULL)
+  {
+    throwError("Error opening file");
+    exit(EXIT_FAILURE);
+  }
+  
+  fclose(file);
   bzero(buff, BUFFER_SIZE); 
-
-  fileParam.fileSize = 5;
-  fileParam.NumberOfCharacters = 7;
-  fileParam.NumberOfLines = 6;
 
   write(connfd, &fileParam, sizeof(struct fileParams)); 
 }
