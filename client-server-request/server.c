@@ -6,7 +6,7 @@
 #include <netdb.h>
 #include <unistd.h>
 
-#define PORT_NUMBER 8081
+#define PORT_NUMBER 8082
 #define BUFFER_SIZE 1024
 #define SA struct sockaddr 
 
@@ -17,6 +17,8 @@ struct fileParams {
   int NumberOfWords;
 };
 
+struct fileParams fileParam;
+
 void throwError(const char* msg)
 {
     perror(msg);
@@ -26,7 +28,7 @@ void throwError(const char* msg)
 void reciveFileName(int connfd)
 {
   char buff[BUFFER_SIZE];
-  int n;
+  int n = 0;
 
   bzero(buff, BUFFER_SIZE); 
 
@@ -37,9 +39,12 @@ void reciveFileName(int connfd)
   printf("Filne name is: %s\n", buff);
 
   bzero(buff, BUFFER_SIZE); 
-  n = 0; 
 
-  write(connfd, buff, sizeof(buff)); 
+  fileParam.fileSize = 5;
+  fileParam.NumberOfCharacters = 7;
+  fileParam.NumberOfLines = 6;
+
+  write(connfd, &fileParam, sizeof(struct fileParams)); 
 }
 
 int main()

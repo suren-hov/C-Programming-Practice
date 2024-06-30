@@ -8,7 +8,7 @@
 #include <arpa/inet.h> 
 #include <unistd.h>
 
-#define PORT_NUMBER 8081
+#define PORT_NUMBER 8082
 #define BUFFER_SIZE 1024
 #define IP_ADDRESS "127.0.0.1"
 #define SA struct sockaddr
@@ -47,6 +47,24 @@ int main()
 		throwError("Connection with the server failed...\n");
 	} else
 		printf("Connected to the server..\n");    
+
+    char buff[BUFFER_SIZE];
+    bzero(buff, sizeof(buff));
+
+    printf("Enter the file name: ");
+    int n = 0;
+
+    while ((buff[n++] = getchar()) != '\n');
+    write(sockfd, buff, sizeof(buff));
+
+    bzero(buff, sizeof(buff));
+    struct fileParams fileParam;
+
+    read(sockfd, &fileParam, sizeof(struct fileParams));
+
+	printf("File size is : %d\n", fileParam.fileSize);
+	printf("Number of characters is : %d\n", fileParam.NumberOfCharacters);
+	printf("Number of lines is : %d\n", fileParam.NumberOfLines);
 
     close(sockfd);
 }
