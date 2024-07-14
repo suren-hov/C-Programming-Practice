@@ -11,11 +11,11 @@ void print_usage(const char *prog_name) {
         "*                                                     *\n"
         "*  Usage:                                             *\n"
         "*                                                     *\n"
-        "     %s <hostname> <filename> <method>                \n"
+        "     %s <hostname> <filename> <method>                 \n"
         "*                                                     *\n"
         "*  Example:                                           *\n"
         "*                                                     *\n"
-        "     %s localhost index.html GET                      \n"
+        "     %s localhost index.html GET                       \n"
         "*                                                     *\n"
         "*******************************************************\n"
         , prog_name, prog_name);
