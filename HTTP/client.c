@@ -1,4 +1,7 @@
 #include "./includes/sockutils.h"
+#include "./includes/usage.h"
+#include <stdio.h>
+
 #define DESTFILE "tmp.html"
 
 void openInBrowser(char *response) {
@@ -14,19 +17,20 @@ void openInBrowser(char *response) {
 
             char command[256];
             snprintf(command, sizeof(command), "xdg-open %s", DESTFILE);
-        if ((system(command)) == -1) 
-            error("Unable to execute command."); 
-        } else {
+            
+            if ((system(command)) == -1)
+                error("Unable to execute command.");
+        } else
             printf("HTML content not found in the response.\n");
-        }
-    } else {
+    } else
         printf("%s\n", response);
-    }
 }
 
 int main(int argc, char* argv[]) {
-    if(argc < 4)
-        error("Invalid credentials.");
+    if(argc < 4) {
+        print_usage(argv[0]);
+        exit(EXIT_FAILURE);
+    }
 
     char *hostname = argv[1];
     char *filename = argv[2];
