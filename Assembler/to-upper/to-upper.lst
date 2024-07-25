@@ -1,0 +1,37 @@
+     1                                  section .data
+     2 00000000 48656C6C6F20576F72-     	msg db "Hello World", 10, 0
+     2 00000009 6C640A00           
+     3                                  	size equ 12
+     4                                  	low_f equ 'a'
+     5                                  	low_e equ 'z'
+     6                                  	dif equ 32
+     7                                  section .text
+     8                                  	global main:
+     9                                  main:	
+    10 00000000 48BE-                   	mov rsi, msg
+    10 00000002 [0000000000000000] 
+    11 0000000A BB00000000              	mov rbx, 0
+    12                                  	
+    13                                  loop:
+    14 0000000F 4883FB0C                	cmp rbx, size
+    15 00000013 7415                    	je end
+    16 00000015 803C1E61                	cmp byte [rsi + rbx], low_f
+    17 00000019 720A                    	jb cont
+    18 0000001B 803C1E7A                	cmp byte [rsi + rbx], low_e
+    19 0000001F 7704                    	ja cont
+    20 00000021 802C1E20                	sub byte [rsi + rbx], dif
+    21                                  cont:
+    22 00000025 48FFC3                  	inc rbx
+    23 00000028 EBE5                    	jmp loop
+    24                                  
+    25                                  end:
+    26 0000002A B801000000              	mov rax, 1
+    27 0000002F BF01000000              	mov rdi, 1
+    28 00000034 48BE-                   	mov rsi, msg
+    28 00000036 [0000000000000000] 
+    29 0000003E BA0C000000              	mov rdx, size
+    30 00000043 0F05                    	syscall	
+    31                                  
+    32 00000045 B83C000000              	mov rax, 60
+    33 0000004A BF00000000              	mov rdi, 0
+    34 0000004F 0F05                    	syscall

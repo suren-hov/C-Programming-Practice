@@ -1,0 +1,45 @@
+     1                                  section .data
+     2 00000000 2564                           decimal db "%d"
+     3                                  section .bss
+     4 00000000 ????????                       number resd 1
+     5                                  section .text
+     6                                  extern printf
+     7                                  extern scanf
+     8                                         global main:
+     9                                  main:
+    10 00000000 55                             push rbp     
+    11 00000001 4889E5                         mov rbp, rsp 
+    12 00000004 B800000000                     mov rax, 0
+    13 00000009 48BF-                          mov rdi, decimal
+    13 0000000B [0000000000000000] 
+    14 00000013 48BE-                          mov rsi, number
+    14 00000015 [0000000000000000] 
+    15 0000001D E8(00000000)                   call scanf
+    16                                  
+    17 00000022 B801000000                     mov rax, 1
+    18 00000027 48BE-                          mov rsi, number
+    18 00000029 [0000000000000000] 
+    19                                  f_loop:
+    20 00000031 833E00                         cmp dword [rsi], 0
+    21 00000034 7C08                           jl low_case
+    22 00000036 740D                           je end_prog
+    23 00000038 F726                           mul dword [rsi] 
+    24 0000003A FF0E                           dec dword [rsi]   
+    25 0000003C EBF3                           jmp f_loop 
+    26                                  low_case:
+    27 0000003E 48C7C0FFFFFFFF                 mov rax, -1
+    28                                  end_prog:
+    29 00000045 4889C6                         mov rsi, rax
+    30 00000048 B800000000                     mov rax, 0
+    31 0000004D 48BF-                          mov rdi, decimal
+    31 0000004F [0000000000000000] 
+    32 00000057 E8(00000000)                   call printf
+    33                                  
+    34 0000005C B800000000                     mov rax, 0    
+    35 00000061 4889EC                         mov rsp, rbp  
+    36 00000064 5D                             pop rbp        
+    37 00000065 C3                             ret
+    38                                  
+    39                                  
+    40                                  
+    41                                  
